@@ -1,4 +1,4 @@
-package libs
+package network
 
 import (
 	"encoding/binary"

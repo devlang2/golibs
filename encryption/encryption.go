@@ -7,41 +7,7 @@ import (
 	"crypto/rand"
 	"errors"
 	"io"
-
-	//	"github.com/davecgh/go-spew/spew"
 )
-
-//var (
-//	key = []byte("c43ac86d84469030f28c0a9656b1c533")
-//	iv  = []byte("2981eeca66b5c3cd")
-//)
-
-//func main() {
-//	//	spew.Dump()
-//	key := []byte("c43ac86d84469030f28c0a9656b1c533")
-//	iv := []byte("2981eeca66b5c3cd")
-
-//	//	var str = "Hello world!  "
-//	//	data := []byte(str)
-//	//	data_enc, _ := Encrypt(key, data)
-//	//	spew.Dump(data_enc)
-//	//	data_dec, _ := Decrypt(key, data_enc)
-//	//	spew.Dump(data_dec)
-
-//	data_enc, _ := hex.DecodeString("5f3d4526d15a37cf8243103b6004b3a13ff8abe735ecc788d4879f3bef34a92ce446cb97aed9350704351b27dfb7e851991ad101b0be39154165c61856be2f178513d057024eb8b628dfca77607742d68206c20667b6a54fb467bdbbd2df71ab1e4430bf4ad279db3d08332c55d12f05e1e996a46d11d9c753f845eb87b1c1189f0b3af3057c9dd657fbde1ac637cf62")
-//	spew.Dump(data_enc)
-//	src := append(iv, data_enc...)
-//	data_dec, _ := Decrypt(key, src)
-//	spew.Dump(data_dec)
-//	arr := bytes.Split(data_dec, []byte("|"))
-//	spew.Dump(arr)
-
-//	//	data := getData()
-
-//	//	decrypt(data)
-//	//	str := decrypt(data)
-//	//	spew.Dump(str)
-//}
 
 func Encrypt(key, plaintext []byte) ([]byte, error) {
 	plaintext = pad(plaintext)
