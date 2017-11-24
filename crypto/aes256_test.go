@@ -55,7 +55,7 @@ func TestEncrypt(t *testing.T) {
 		t.Error(err.Error())
 	}
 
-	// Compair
+	// Compare
 	if !reflect.DeepEqual(obj, objDecrypted) {
 		t.Error("Failed to decrypting file")
 	}
@@ -70,7 +70,7 @@ func tempMkdir(t *testing.T) string {
 }
 
 func tempMkFile(t *testing.T, dir string) string {
-	f, err := ioutil.TempFile(dir, "fsnotify")
+	f, err := ioutil.TempFile(dir, "devplayg")
 	if err != nil {
 		t.Fatalf("failed to create test file: %v", err)
 	}
