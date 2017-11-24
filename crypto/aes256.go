@@ -5,8 +5,10 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"encoding/json"
 	"errors"
 	"io"
+	"io/ioutil"
 )
 
 func EncAes256(key, plaintext []byte) ([]byte, error) {
@@ -67,4 +69,38 @@ func unpad(src []byte) ([]byte, error) {
 		return nil, errors.New("Unpad error. This could happen when incorrect encryption key is used")
 	}
 	return src[:(length - unpadding)], nil
+}
+
+func SaveObjectToEncryptedFile(filepath string, key []byte, v interface{}) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	enc, err := EncAes256(key, b)
+	if err != nil {
+		return err
+	}
+
+	err = ioutil.WriteFile(filepath, enc, 0644)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func LoadEncryptedObjectFile(filepath string, key []byte, v interface{}) error {
+	enc, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		return err
+	}
+
+	dec, err := DecAes256(key, enc)
+	if err != nil {
+		return err
+	}
+	err = json.Unmarshal(dec, &v)
+
+	return nil
 }

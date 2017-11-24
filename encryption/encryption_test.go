@@ -7,7 +7,7 @@ import (
 )
 
 func TestEncrypt(t *testing.T) {
-	key := []byte("This is the key!") // 16 bytes
+	key := []byte("This is the key!111") // 16 bytes
 	data := []byte("Hello world~!")
 
 	// Encrypt
