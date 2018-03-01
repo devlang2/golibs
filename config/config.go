@@ -1,11 +1,12 @@
 package config
 
 import (
-	"os"
+	"bufio"
 	"errors"
 	"fmt"
-	"bufio"
+	"os"
 	"strings"
+
 	"github.com/devplayg/golibs/crypto"
 )
 
@@ -29,13 +30,12 @@ func SetConfig(configPath, keys string, key []byte) error {
 	if len(keys) > 0 {
 		arr := strings.Split(keys, ",")
 		for _, k := range arr {
-			readInput(k, config)
+			readInput(trim(k), config)
 		}
 	}
 	err := crypto.SaveObjectToEncryptedFile(configPath, key, config)
 	return err
 }
-
 
 func readInput(key string, config map[string]string) {
 	if val, ok := config[key]; ok && len(val) > 0 {
