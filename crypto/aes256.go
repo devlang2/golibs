@@ -40,7 +40,7 @@ func DecAes256(key, ciphertext []byte) ([]byte, error) {
 	}
 
 	if len(ciphertext) < aes.BlockSize {
-		return []byte(""), errors.New("Ciphertext too short")
+		return []byte(""), errors.New("ciphertext too short")
 	}
 	iv := ciphertext[:aes.BlockSize]
 	data := make([]byte, len(ciphertext)-aes.BlockSize)
@@ -57,8 +57,8 @@ func DecAes256(key, ciphertext []byte) ([]byte, error) {
 
 func pad(src []byte) []byte {
 	padding := aes.BlockSize - len(src)%aes.BlockSize
-	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
-	return append(src, padtext...)
+	padText := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(src, padText...)
 }
 
 func unpad(src []byte) ([]byte, error) {
@@ -66,12 +66,12 @@ func unpad(src []byte) ([]byte, error) {
 	unpadding := int(src[length-1])
 
 	if unpadding > length {
-		return nil, errors.New("Unpad error. This could happen when incorrect encryption key is used")
+		return nil, errors.New("unpad error. This could happen when incorrect encryption key is used")
 	}
 	return src[:(length - unpadding)], nil
 }
 
-func SaveObjectToEncryptedFile(filepath string, key []byte, v interface{}) error {
+func SaveObjectToEncryptedFile(filePath string, key []byte, v interface{}) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -82,7 +82,7 @@ func SaveObjectToEncryptedFile(filepath string, key []byte, v interface{}) error
 		return err
 	}
 
-	err = ioutil.WriteFile(filepath, enc, 0644)
+	err = ioutil.WriteFile(filePath, enc, 0644)
 	if err != nil {
 		return err
 	}
@@ -90,8 +90,8 @@ func SaveObjectToEncryptedFile(filepath string, key []byte, v interface{}) error
 	return nil
 }
 
-func LoadEncryptedObjectFile(filepath string, key []byte, v interface{}) error {
-	enc, err := ioutil.ReadFile(filepath)
+func LoadEncryptedObjectFile(filePath string, key []byte, v interface{}) error {
+	enc, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return err
 	}
@@ -100,7 +100,7 @@ func LoadEncryptedObjectFile(filepath string, key []byte, v interface{}) error {
 	if err != nil {
 		return err
 	}
-	err = json.Unmarshal(dec, &v)
 
+	err = json.Unmarshal(dec, &v)
 	return nil
 }
