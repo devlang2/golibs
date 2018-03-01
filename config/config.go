@@ -30,7 +30,7 @@ func SetConfig(configPath, keys string, key []byte) error {
 	if len(keys) > 0 {
 		arr := strings.Split(keys, ",")
 		for _, k := range arr {
-			readInput(trim(k), config)
+			readInput(strings.TrimSpace(k), config)
 		}
 	}
 	err := crypto.SaveObjectToEncryptedFile(configPath, key, config)
