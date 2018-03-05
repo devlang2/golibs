@@ -1,17 +1,17 @@
-package config
+package secureconfig
 
 import (
-	"testing"
-	"io/ioutil"
 	"github.com/devplayg/golibs/crypto"
+	"io/ioutil"
 	"os"
+	"testing"
 )
 
 func TestGetConfig(t *testing.T) {
 	config := map[string]string{
-		"what is your name?" : "devplayg",
-		"what is your hobby?" : "programming",
-		"what are you up to" : "programming",
+		"what is your name?":  "devplayg",
+		"what is your hobby?": "programming",
+		"what are you up to":  "programming",
 	}
 
 	configFile, err := ioutil.TempFile("", "config")
