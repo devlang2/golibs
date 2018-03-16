@@ -11,3 +11,12 @@ func IpToInt32(ip net.IP) uint32 {
 	}
 	return binary.BigEndian.Uint32(ip)
 }
+
+func GetNetworkHostCount(cidr int) int {
+	if cidr == 32 {
+		return 1
+	} else if cidr == 31 {
+		return 2
+	}
+	return (2 << uint(31-cidr))
+}
