@@ -18,5 +18,5 @@ func GetNetworkHostCount(cidr int) int {
 	} else if cidr == 31 {
 		return 2
 	}
-	return (2 << uint(31-cidr))
+	return 2<< (31-uint(cidr))
 }
