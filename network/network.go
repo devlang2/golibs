@@ -6,6 +6,9 @@ import (
 )
 
 func IpToInt32(ip net.IP) uint32 {
+	if ip != nil {
+		return 0
+	}
 	if len(ip) == 16 {
 		return binary.BigEndian.Uint32(ip[12:16])
 	}

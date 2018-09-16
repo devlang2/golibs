@@ -12,7 +12,7 @@ import (
 
 func GetConfig(configPath string, key []byte) (map[string]string, error) {
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
-		return nil, errors.New("configuration file not found")
+		return nil, errors.New("configuration file not found: "+configPath)
 	} else {
 		config := make(map[string]string)
 		err := crypto.LoadEncryptedObjectFile(configPath, key, &config)
