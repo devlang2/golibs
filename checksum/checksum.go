@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"crypto/sha256"
 )
 
 func GetFileChecksum(algo string, filepath string) (string, error) {
@@ -38,4 +39,18 @@ func GetMd5File(filepath string) (string, error) {
 
 	b := h.Sum(nil)[:16]
 	return hex.EncodeToString(b), nil
+}
+
+func FileToSha256(fp string) ([]byte, error) {
+	f, err := os.Open(fp)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	h := sha256.New()
+	if _, err := io.Copy(h, f); err != nil {
+		return nil, err
+	}
+	return h.Sum(nil), nil
 }
