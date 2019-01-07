@@ -54,3 +54,17 @@ func FileToSha256(fp string) ([]byte, error) {
 	}
 	return h.Sum(nil), nil
 }
+
+func FileToMd5(fp string) ([]byte, error) {
+	f, err := os.Open(fp)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	h := md5.New()
+	if _, err := io.Copy(h, f); err != nil {
+		return nil, err
+	}
+	return h.Sum(nil), nil
+}
