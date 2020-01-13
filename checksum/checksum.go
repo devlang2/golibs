@@ -2,11 +2,11 @@ package checksum
 
 import (
 	"crypto/md5"
+	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"io"
 	"os"
-	"crypto/sha256"
 )
 
 func GetFileChecksum(algo string, filepath string) (string, error) {
