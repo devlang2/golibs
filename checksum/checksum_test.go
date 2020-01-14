@@ -69,7 +69,7 @@ func compareFileChecksum(str, expected string, algo crypto.Hash) error {
 }
 
 func createTempFile(text string) (*os.File, error) {
-	f, err := ioutil.TempFile("c:/temp", "")
+	f, err := ioutil.TempFile("", "")
 	if err != nil {
 		return nil, err
 	}
