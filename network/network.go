@@ -5,8 +5,8 @@ import (
 	"net"
 )
 
-func IpToInt32(ip net.IP) uint32 {
-	if ip != nil {
+func IpToInt(ip net.IP) uint32 {
+	if ip == nil {
 		return 0
 	}
 	if len(ip) == 16 {
@@ -15,11 +15,17 @@ func IpToInt32(ip net.IP) uint32 {
 	return binary.BigEndian.Uint32(ip)
 }
 
+func IntToIp(nn uint32) net.IP {
+	ip := make(net.IP, 4)
+	binary.BigEndian.PutUint32(ip, nn)
+	return ip
+}
+
 func GetNetworkHostCount(cidr int) int {
 	if cidr == 32 {
 		return 1
 	} else if cidr == 31 {
 		return 2
 	}
-	return 2<< (31-uint(cidr))
+	return 2 << (31 - uint(cidr))
 }

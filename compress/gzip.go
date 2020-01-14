@@ -22,16 +22,17 @@ func compressWithGzip(data []byte) ([]byte, error) {
 }
 
 func decompressWithGzip(s []byte) ([]byte, error) {
-	reader, err := gzip.NewReader(bytes.NewReader(s))
+	zr, err := gzip.NewReader(bytes.NewReader(s))
 	if err != nil {
 		return nil, err
 	}
-	data, err := ioutil.ReadAll(reader)
+	data, err := ioutil.ReadAll(zr)
 	if err != nil {
 		return nil, err
 	}
-	if err := reader.Close(); err != nil {
+	if err := zr.Close(); err != nil {
 		return nil, err
 	}
+
 	return data, nil
 }

@@ -1,47 +1,27 @@
 package checksum
 
 import (
+	"crypto"
 	"crypto/md5"
 	"crypto/sha256"
-	"encoding/hex"
+	"errors"
 	"fmt"
 	"io"
 	"os"
 )
 
-func GetFileChecksum(algo string, filepath string) (string, error) {
-	return "", nil
-}
-
-func GetChecksum(algo string, str string) (string, error) {
-	return "", nil
-}
-
-func GetMd5(str string) (string, error) {
-	h := md5.New()
-	io.WriteString(h, str)
-	h.Sum(nil)
-
-	return fmt.Sprintf("%x", h.Sum(nil)), nil
-}
-
-func GetMd5File(filepath string) (string, error) {
-	f, err := os.Open(filepath)
-	if err != nil {
-		return "", err
+func GetFileChecksum(path string, algorithm crypto.Hash) ([]byte, error) {
+	if algorithm == crypto.MD5 {
+		return getMd5Checksum(path)
 	}
-	defer f.Close()
-
-	h := md5.New()
-	if _, err := io.Copy(h, f); err != nil {
-		return "", err
+	if algorithm == crypto.SHA256 {
+		return getSha256Checksum(path)
 	}
 
-	b := h.Sum(nil)[:16]
-	return hex.EncodeToString(b), nil
+	return nil, errors.New(fmt.Sprintf("not supported algorithm: %v", algorithm))
 }
 
-func FileToSha256(fp string) ([]byte, error) {
+func getSha256Checksum(fp string) ([]byte, error) {
 	f, err := os.Open(fp)
 	if err != nil {
 		return nil, err
@@ -55,7 +35,7 @@ func FileToSha256(fp string) ([]byte, error) {
 	return h.Sum(nil), nil
 }
 
-func FileToMd5(fp string) ([]byte, error) {
+func getMd5Checksum(fp string) ([]byte, error) {
 	f, err := os.Open(fp)
 	if err != nil {
 		return nil, err
@@ -67,4 +47,24 @@ func FileToMd5(fp string) ([]byte, error) {
 		return nil, err
 	}
 	return h.Sum(nil), nil
+}
+
+func GetStringChecksum(str string, algorithm crypto.Hash) ([]byte, error) {
+	if algorithm == crypto.MD5 {
+		h := md5.New()
+		_, err := io.WriteString(h, str)
+		if err != nil {
+			return nil, err
+		}
+		return h.Sum(nil), nil
+	}
+	if algorithm == crypto.SHA256 {
+		h := sha256.New()
+		_, err := io.WriteString(h, str)
+		if err != nil {
+			return nil, err
+		}
+		return h.Sum(nil), nil
+	}
+	return nil, errors.New(fmt.Sprintf("not supported algorithm: %v", algorithm))
 }
