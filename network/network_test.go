@@ -23,7 +23,6 @@ func TestNetworks(t *testing.T) {
 		intIp := IpToInt(c.ip)
 
 		returnedIP := IntToIp(intIp)
-		//spew.Dump(intIp)
 		if !bytes.Equal(c.ip, returnedIP) {
 			t.Errorf("OriginalIP(%v) = ReturnedIP(%v)", c.ip, returnedIP)
 		}
