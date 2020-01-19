@@ -24,3 +24,8 @@ func EncodeToBytes(p interface{}) ([]byte, error) {
 	}
 	return buf.Bytes(), nil
 }
+
+func DecodeFromBytes(data []byte, to interface{}) error {
+	decoder := gob.NewDecoder(bytes.NewReader(data))
+	return decoder.Decode(to)
+}
